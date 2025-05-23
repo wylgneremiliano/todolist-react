@@ -6,7 +6,7 @@ import { Tarefa } from './components/Tarefa';
 
 
 function App() {
-
+  const listaTarefas = [{ mensagem: "Teste mensagem 1" }, { mensagem: "Teste mensagem 2" }, { mensagem: "Teste mensagem 3" }]
   return (
 
 
@@ -22,11 +22,10 @@ function App() {
         <div className='quadradoBranco'>
           <form action="">
             <TextField id="outlined-basic" label="Título da tarefa" variant="outlined" size="small" />
-            <Button variant="contained">Adicionar tarefa</Button>
+            <Button variant="contained">Add</Button>
           </form>
           <div className='listaTarefa'>
-            <Tarefa />
-
+            {listaTarefas.map(item => <Tarefa mensagem={item.mensagem} />)}
           </div>
         </div>
 
