@@ -11,7 +11,6 @@ import uuid4 from "uuid4";
 
 function App() {
   const [listaTarefa, setListaTarefa] = useState([])
-  console.log(JSON.stringify(listaTarefa, null, 2));
 
 
   const excluirTarefa = (id) => {
@@ -19,6 +18,10 @@ function App() {
     setListaTarefa(arrayAtualizado);
   }
 
+  const resolverTarefa = (id, resolvida) => {
+    const arrayAtualizado = listaTarefa.map(item => item.id === id ? { ...item, resolvida: !resolvida } : item);
+    setListaTarefa(arrayAtualizado);
+  }
 
 
 
@@ -40,23 +43,18 @@ function App() {
       if (values.tituloTarefa.length === 0) {
         erros.tituloTarefa = "Campo obrigatório!"
       }
+      if(values.tituloTarefa.length >= 45){
+        erros.tituloTarefa = "Máximo de caracteres: 45"
+      }
       return erros;
     }
   });
 
-  console.log(formik.errors.tituloTarefa)
-  console.log(!!formik.errors.tituloTarefa)
   return (
 
     <>
-      {/* <TextField id="outlined-basic" label="Título da tarefa" variant="outlined" />
-      <Button variant="contained">Adicionar tarefa</Button>
-      <Checkbox />
-      <Button variant="outlined" startIcon={<DeleteIcon />}>
-        Apagar tarefa
-      </Button> */}
 
-      < div className='fundoAzul' >
+      <div className='fundoAzul' >
         <div className='quadradoBranco'>
           <form onSubmit={formik.handleSubmit}>
             <TextField
@@ -73,7 +71,7 @@ function App() {
             <Button variant="contained" type="submit">Add</Button>
           </form>
           <div className='listaTarefa'>
-            {listaTarefa.map(item => <Tarefa tarefaProp={item} acaoExcluir={excluirTarefa} />)}
+            {listaTarefa.map(item => <Tarefa tarefaProp={item} acaoExcluir={excluirTarefa} acaoResolve={resolverTarefa} />)}
           </div>
         </div>
 
